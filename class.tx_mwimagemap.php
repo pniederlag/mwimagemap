@@ -1,8 +1,8 @@
 <?php
 
-require_once (PATH_t3lib.'class.t3lib_page.php');
-require_once (PATH_t3lib.'class.t3lib_tstemplate.php');
-require_once (PATH_t3lib.'class.t3lib_tsparser_ext.php');
+//require_once (PATH_t3lib.'class.t3lib_page.php');
+//require_once (PATH_t3lib.'class.t3lib_tstemplate.php');
+//require_once (PATH_t3lib.'class.t3lib_tsparser_ext.php');
 
 class tx_mwimagemap {
 	/**

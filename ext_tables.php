@@ -6,28 +6,13 @@ $tx_mwimagemap_extconf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf
 include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'class.tx_mwimagemap_ufunc.php');
 include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'class.tx_mwimagemap.php');
 
-$damloaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('dam');
-if($damloaded == TRUE) {
-	$p = fopen(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'dam.txt', 'w+');
-	fputs($p, 'true');
-	fclose($p);
-}
-else {
-	$dtext = file_get_contents(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'dam.txt');
-	if($dtext == 'true') {
-		$p = fopen(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'dam.txt', 'w+');
-		fputs($p, 'false');
-		fclose($p);
-	}
-}
-
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'static/pi1/', 'MW Imagemap');
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
-$TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1']='layout,select_key,pages,recursive';
+//\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1']='layout,select_key,pages,recursive';
 
 // -------------------------------------------------------------------
-// Use an image map with the Content-type "image", "image with Text" 
+// Use an image map with the Content-type "image", "image with Text"
 // -------------------------------------------------------------------
 if($tx_mwimagemap_extconf['disable_IMAGE'] == 0) {
 $tempColumns = Array (
@@ -51,19 +36,17 @@ $tempColumns = Array (
 			),
 		),
 	);
-		
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $tempColumns, 1);
 
-$TCA['tt_content']['palettes'][] = array( 'showitem' => 'tx_mwimagemap', 'canNotCollapse' => 1 );
-end($TCA['tt_content']['palettes']);
-$p_key = key($TCA['tt_content']['palettes']);
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:mwimagemap/locallang_db.php:tx_mwimagemap;'.$p_key, 'textpic,image');
+$GLOBALS['TCA']['tt_content']['palettes']['mwimagemap'] = array( 'showitem' => 'tx_mwimagemap', 'canNotCollapse' => 1 );
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:mwimagemap/locallang_db.php:tx_mwimagemap;'.'mwimagemap', 'textpic,image');
 }
 
 // --------------------------------------------
-// Flexform for directly inserting the plugin. 
+// Flexform for directly inserting the plugin.
 // --------------------------------------------
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']='pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']='pi_flexform';
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($_EXTKEY.'_pi1', '
 <T3DataStructure>
@@ -91,8 +74,7 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']='pi_fle
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(Array('LLL:EXT:mwimagemap/locallang_db.php:tt_content.list_type_pi1', $_EXTKEY.'_pi1'), 'list_type');
 
 if (TYPO3_MODE=='BE')	{
-	if($damloaded == TRUE) { \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule('txdamM1', 'mwimagemap', '', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'mod1/'); }
-	else { \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule('file', 'txmwimagemapM1', '', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)."mod1/"); }
+	\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule('file', 'txmwimagemapM1', '', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)."mod1/");
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_mwimagemap_pi1_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'pi1/class.tx_mwimagemap_pi1_wizicon.php';
 }
 ?>

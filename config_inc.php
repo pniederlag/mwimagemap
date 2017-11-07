@@ -4,10 +4,10 @@ if(!TYPO3_MODE) { die('This script cannot be called directly.'); }
 
 function mwimagemap_getitems() {
 	if (TYPO3_MODE == 'BE') {
-	  require_once (PATH_t3lib.'class.t3lib_userauth.php');
-	  require_once (PATH_t3lib.'class.t3lib_userauthgroup.php');
-	  require_once (PATH_t3lib.'class.t3lib_beuserauth.php');
-		require_once (PATH_t3lib.'class.t3lib_tsfebeuserauth.php');
+	  //require_once (PATH_t3lib.'class.t3lib_userauth.php');
+	  //require_once (PATH_t3lib.'class.t3lib_userauthgroup.php');
+	  //require_once (PATH_t3lib.'class.t3lib_beuserauth.php');
+	 //require_once (PATH_t3lib.'class.t3lib_tsfebeuserauth.php');
 		$BE_USER = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Backend\FrontendBackendUserAuthentication::class);
 		$BE_USER->start();
 		$BE_USER->unpack_uc('');
