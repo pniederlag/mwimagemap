@@ -28,9 +28,9 @@
  */
 
 require_once(PATH_tslib.'class.tslib_pibase.php');
-require_once(t3lib_extMgm::extPath('mwimagemap').'constants.php');
+require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'constants.php');
 
-class tx_mwimagemap_pi1 extends tslib_pibase {
+class tx_mwimagemap_pi1 extends TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 	var $prefixId = 'tx_mwimagemap_pi1';		// Same as class name
 	var $scriptRelPath = 'pi1/class.tx_mwimagemap_pi1.php';	// Path to this script relative to the extension dir.
 	var $extKey = 'mwimagemap';	// The extension key.
@@ -49,14 +49,14 @@ class tx_mwimagemap_pi1 extends tslib_pibase {
 		$this->pi_USER_INT_obj=0;
 		$this->extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mwimagemap']);
 		$this->title	 = $this->extConf['fe_title'];
-		$this->getarea = t3lib_div::_GP('mwi_area');
+		$this->getarea = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('mwi_area');
 		$this->pi_initPIflexForm();
 		if ( ! ( $this->map_id = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'imagemap') ) ) { return; }
 
 		$db = &$GLOBALS['TYPO3_DB'];
 		
 		$this->add_cbox_css = $this->conf['contentbox_additionalcss'];
-		$this->template = $this->cObj->fileResource($this->conf['template']);
+		$this->template = $this->cObj->fileResource($this->conf[\TYPO3\CMS\Backend\Template\DocumentTemplate::class]);
 		$this->javascript = $this->conf['javascript'];
 		
 		if(!isset($GLOBALS['TSFE']->additionalHeaderData['mwimagemap'])) {
@@ -256,7 +256,7 @@ class tx_mwimagemap_pi1 extends tslib_pibase {
 		
 		if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mwimagemap']['hook'])) {
 			foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['mwimagemap']['hook'] as $_classRef) {
-				$_procObj = &t3lib_div::getUserObj($_classRef);
+				$_procObj = &\TYPO3\CMS\Core\Utility\GeneralUtility::getUserObj($_classRef);
 				$_procObj->additionalMarkerProcessor($this);
 			}
 		}

@@ -1,29 +1,29 @@
 <?php
 if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 
-require_once( t3lib_extMgm::extPath($_EXTKEY).'config_inc.php' );
+require_once( \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'config_inc.php' );
 $tx_mwimagemap_extconf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['mwimagemap']);
-include_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_mwimagemap_ufunc.php');
-include_once(t3lib_extMgm::extPath($_EXTKEY).'class.tx_mwimagemap.php');
+include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'class.tx_mwimagemap_ufunc.php');
+include_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'class.tx_mwimagemap.php');
 
-$damloaded = t3lib_extMgm::isLoaded('dam');
+$damloaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('dam');
 if($damloaded == TRUE) {
-	$p = fopen(t3lib_extMgm::extPath($_EXTKEY).'dam.txt', 'w+');
+	$p = fopen(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'dam.txt', 'w+');
 	fputs($p, 'true');
 	fclose($p);
 }
 else {
-	$dtext = file_get_contents(t3lib_extMgm::extPath($_EXTKEY).'dam.txt');
+	$dtext = file_get_contents(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'dam.txt');
 	if($dtext == 'true') {
-		$p = fopen(t3lib_extMgm::extPath($_EXTKEY).'dam.txt', 'w+');
+		$p = fopen(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'dam.txt', 'w+');
 		fputs($p, 'false');
 		fclose($p);
 	}
 }
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'static/pi1/', 'MW Imagemap');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'static/pi1/', 'MW Imagemap');
 
-t3lib_div::loadTCA('tt_content');
+\TYPO3\CMS\Core\Utility\GeneralUtility::loadTCA('tt_content');
 $TCA['tt_content']['types']['list']['subtypes_excludelist'][$_EXTKEY.'_pi1']='layout,select_key,pages,recursive';
 
 // -------------------------------------------------------------------
@@ -36,6 +36,7 @@ $tempColumns = Array (
 			'exclude' => 1,											// CR by Stefan Galinski
 			'config' => Array (
 				'type' => 'select',
+				'renderType' => 'selectSingle',
 				'size' => '1',
 				'itemsProcFunc' => 'tx_mwimagemap->main',
 				'wizards' => array(
@@ -51,12 +52,12 @@ $tempColumns = Array (
 		),
 	);
 		
-t3lib_extMgm::addTCAcolumns('tt_content', $tempColumns, 1);
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('tt_content', $tempColumns, 1);
 
 $TCA['tt_content']['palettes'][] = array( 'showitem' => 'tx_mwimagemap', 'canNotCollapse' => 1 );
 end($TCA['tt_content']['palettes']);
 $p_key = key($TCA['tt_content']['palettes']);
-t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:mwimagemap/locallang_db.php:tx_mwimagemap;'.$p_key, 'textpic,image');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:mwimagemap/locallang_db.php:tx_mwimagemap;'.$p_key, 'textpic,image');
 }
 
 // --------------------------------------------
@@ -64,7 +65,7 @@ t3lib_extMgm::addToAllTCAtypes('tt_content', '--palette--;LLL:EXT:mwimagemap/loc
 // --------------------------------------------
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY.'_pi1']='pi_flexform';
 
-t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi1', '
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue($_EXTKEY.'_pi1', '
 <T3DataStructure>
 	<ROOT>
 		<type>array</type>
@@ -87,11 +88,11 @@ t3lib_extMgm::addPiFlexFormValue($_EXTKEY.'_pi1', '
 	</ROOT>
 </T3DataStructure>');
 
-t3lib_extMgm::addPlugin(Array('LLL:EXT:mwimagemap/locallang_db.php:tt_content.list_type_pi1', $_EXTKEY.'_pi1'), 'list_type');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPlugin(Array('LLL:EXT:mwimagemap/locallang_db.php:tt_content.list_type_pi1', $_EXTKEY.'_pi1'), 'list_type');
 
 if (TYPO3_MODE=='BE')	{
-	if($damloaded == TRUE) { t3lib_extMgm::addModule('txdamM1', 'mwimagemap', '', t3lib_extMgm::extPath('mwimagemap').'mod1/'); }
-	else { t3lib_extMgm::addModule('file', 'txmwimagemapM1', '', t3lib_extMgm::extPath($_EXTKEY)."mod1/"); }
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_mwimagemap_pi1_wizicon'] = t3lib_extMgm::extPath($_EXTKEY).'pi1/class.tx_mwimagemap_pi1_wizicon.php';
+	if($damloaded == TRUE) { \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule('txdamM1', 'mwimagemap', '', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'mod1/'); }
+	else { \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addModule('file', 'txmwimagemapM1', '', \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY)."mod1/"); }
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_mwimagemap_pi1_wizicon'] = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY).'pi1/class.tx_mwimagemap_pi1_wizicon.php';
 }
 ?>

@@ -34,7 +34,7 @@ class tx_mwimagemap_pi1_wizicon {
 		$LL = $this->includeLocalLang();
 
 		$wizardItems['plugins_mwimagemap'] = array(
-			'icon'=>t3lib_extMgm::extRelPath('mwimagemap').'pi1/ce_wiz.gif',
+			'icon'=>\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('mwimagemap').'pi1/ce_wiz.gif',
 			'title'=>$LANG->getLLL('pi1_title', $LL),
 			'description'=>$LANG->getLLL('pi1_plus_wiz_description', $LL),
 			'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=mwimagemap_pi1'
@@ -43,7 +43,7 @@ class tx_mwimagemap_pi1_wizicon {
 		return $wizardItems;
 	}
 	function includeLocalLang()	{
-	  $LOCAL_LANG = $GLOBALS['LANG']->includeLLFile(t3lib_extMgm::extPath('mwimagemap').'locallang.xml', FALSE);
+	  $LOCAL_LANG = $GLOBALS['LANG']->includeLLFile(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'locallang.xml', FALSE);
 		return $LOCAL_LANG;
 	}
 }

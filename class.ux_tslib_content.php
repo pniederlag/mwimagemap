@@ -3,7 +3,7 @@
 
   class ux_tslib_content { }
 
-  class ux_tslib_cObj extends tslib_cObj {
+  class ux_tslib_cObj extends TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer {
 
 	  function create_link_from_browser( $txt ) {
 		  $txt = trim($txt);
@@ -38,7 +38,7 @@
 	
 		  $GLOBALS['TSFE']->lastImageInfo=$info;
 		  if (is_array($info)) {
-			  $info[3] = t3lib_div::png_to_gif_by_imagemagick($info[3]);
+			  $info[3] = \TYPO3\CMS\Core\Utility\GeneralUtility::png_to_gif_by_imagemagick($info[3]);
 			  $GLOBALS['TSFE']->imagesOnPage[]=$info[3];		// This array is used to collect the image-refs on the page...
 			
 			  // create the "usemap"-attribute.
@@ -108,7 +108,7 @@
 				  $conf['altText.'] = $conf['alttext.'];
 			  }
 			  $altParam = $this->getAltParam($conf);
-			  $theValue = '<img src="'.htmlspecialchars($GLOBALS['TSFE']->absRefPrefix.t3lib_div::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').($conf['params']?' '.$conf['params']:'').($altParam).$usemap.' />'.$imagemap;
+			  $theValue = '<img src="'.htmlspecialchars($GLOBALS['TSFE']->absRefPrefix.\TYPO3\CMS\Core\Utility\GeneralUtility::rawUrlEncodeFP($info[3])).'" width="'.$info[0].'" height="'.$info[1].'"'.$this->getBorderAttr(' border="'.intval($conf['border']).'"').($conf['params']?' '.$conf['params']:'').($altParam).$usemap.' />'.$imagemap;
 			  if ($conf['linkWrap']) { $theValue = $this->linkWrap($theValue, $conf['linkWrap']); }
 			  elseif ($conf['imageLinkWrap']) { $theValue = $this->imageLinkWrap($theValue, $info['origFile'], $conf['imageLinkWrap.']); }
 			  return $this->wrap($theValue, $conf['wrap']);
