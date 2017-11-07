@@ -13,7 +13,7 @@ function mwimagemap_getitems() {
 		$BE_USER->unpack_uc('');
 		if ($BE_USER->user['uid']) { $BE_USER->fetchGroupData(); }
 		$filemounts = $BE_USER->groupData['filemounts'];
-		
+
 		$i = 0;
 		$opt = '';
 		if ( ! ($res = $GLOBALS['TYPO3_DB']->sql_query('SELECT id, name, folder FROM tx_mwimagemap_map order by name asc')) ) { return; }

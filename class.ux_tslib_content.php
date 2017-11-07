@@ -35,12 +35,12 @@
 
 	  function cImage($file, $conf) {
 		  $info = $this->getImgResource($file, $conf['file.']);
-	
+
 		  $GLOBALS['TSFE']->lastImageInfo=$info;
 		  if (is_array($info)) {
 			  $info[3] = \TYPO3\CMS\Core\Utility\GeneralUtility::png_to_gif_by_imagemagick($info[3]);
 			  $GLOBALS['TSFE']->imagesOnPage[]=$info[3];		// This array is used to collect the image-refs on the page...
-			
+
 			  // create the "usemap"-attribute.
 			  $usemap	 = '';
 			  $imagemap = '';
@@ -53,7 +53,7 @@
 		      if ( $res && ( $row = $db->sql_fetch_row($res) ) ) {
 		        $usemap	= ' usemap="#map_'.$this->data['uid'].'"';
 		        $imagemap = '<map name="map_'.$this->data['uid'].'" id="map_'.$this->data['uid'].'">';
-				  
+
 					  $area_res = $db->sql_query('SELECT id, type, link, param, description FROM tx_mwimagemap_area WHERE mid = \''.$row[0].'\'');
 				    while ( $area_row = $db->sql_fetch_row( $area_res ) ) {
 					    if(strlen($area_row[3]) == 0 || !preg_match("/alt\=/i", $area_row[3])) { $area_row[3] .= ' alt="'.$area_row[4].'"'; } // adding default alt-attribute in case of its absence
@@ -61,7 +61,7 @@
 						    continue;
 					    }
 						  $link = $this->create_link_from_browser( $area_row[2] );
-						
+
 						  switch( $area_row[1] ) {
 							  case MWIM_RECTANGLE:
 								  if ( $db->sql_num_rows( $point_res ) != 2 ) { continue; }
@@ -70,7 +70,7 @@
 								  $xrow1 = $db->sql_fetch_row($point_res);
 								  $imagemap .= $xrow1[0].','.$xrow1[1].','.($xrow[0]+$xrow1[0]).','.($xrow[1]+$xrow1[1]).'" '.$link.' />'."\n";
 							  break;
-							
+
 							  case MWIM_CIRCLE:
 								  if ( $db->sql_num_rows( $point_res ) != 2 ) { continue; }
 								  $imagemap .= '<area shape="circle" '.$area_row[3].' coords="';
@@ -78,20 +78,20 @@
 								  $xrow1 = $db->sql_fetch_row($point_res);
 								  $imagemap .= $xrow1[0].','.$xrow1[1].','.$xrow[0].'" '.$link.' />'."\n";
 							  break;
-							
+
 							  case MWIM_POLYGON:
-							    // polygon with less than 3 points doesnt make much sense! 
+							    // polygon with less than 3 points doesnt make much sense!
 							    if ( $db->sql_num_rows( $point_res ) < 3 ) { continue; }
 								  $imagemap .= '<area shape="poly" '.$area_row[3].' coords="';
 								  $i = 0;
 								  while ( $xrow = $db->sql_fetch_row($point_res) ) { $imagemap .= ($i++?',':'').$xrow[0].','.$xrow[1]; }
 							    $imagemap .= '" '.$link.' />'."\n";
 							  break;
-				      
+
 							  case MWIM_DEFAULT:
 					        $def_link = $area_row[2];
 					        $def_param = $area_row[3];
-							
+
 							  default:
 						    break;
 					    }

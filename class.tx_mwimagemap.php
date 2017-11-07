@@ -13,7 +13,7 @@ class tx_mwimagemap {
 		$db								 = &$GLOBALS['TYPO3_DB'];
 		$params['items'][0] = Array('---------------','0');
 		$map_res						= $db->sql_query('SELECT id, name, folder, file FROM tx_mwimagemap_map order by name asc');
-		
+
 	if ( $map_res ) {
 		while ( $row = $db->sql_fetch_row($map_res) ) {
 			foreach((array) $FILEMOUNTS as $val ) {
