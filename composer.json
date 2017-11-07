@@ -24,7 +24,8 @@
   },
   "autoload": {
     "files": [
-      "pi1/class.tx_mwimagemap_pi1.php"
+      "pi1/class.tx_mwimagemap_pi1.php",
+      "constants.php"
     ]
   },
   "replace": {
