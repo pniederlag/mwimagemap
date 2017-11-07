@@ -1,5 +1,5 @@
 <?php
-  require_once(PATH_tslib."class.tslib_content.php");
+  //qrequire_once(PATH_tslib."class.tslib_content.php");
 
   class ux_tslib_content { }
 

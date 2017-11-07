@@ -27,7 +27,7 @@
  * @author	Michael Perlbach <info@mikelmade.de>
  */
 
-require_once(PATH_tslib.'class.tslib_pibase.php');
+//require_once(PATH_tslib.'class.tslib_pibase.php');
 require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'constants.php');
 
 class tx_mwimagemap_pi1 extends TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
