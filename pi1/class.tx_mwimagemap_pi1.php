@@ -28,7 +28,7 @@
  */
 
 //require_once(PATH_tslib.'class.tslib_pibase.php');
-require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'constants.php');
+//require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('mwimagemap').'constants.php');
 
 class tx_mwimagemap_pi1 extends TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 	var $prefixId = 'tx_mwimagemap_pi1';		// Same as class name
@@ -56,7 +56,7 @@ class tx_mwimagemap_pi1 extends TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 		$db = &$GLOBALS['TYPO3_DB'];
 
 		$this->add_cbox_css = $this->conf['contentbox_additionalcss'];
-		$this->template = $this->cObj->fileResource($this->conf[\TYPO3\CMS\Backend\Template\DocumentTemplate::class]);
+		$this->template = $this->cObj->fileResource($this->conf['template']);
 		$this->javascript = $this->conf['javascript'];
 
 		if(!isset($GLOBALS['TSFE']->additionalHeaderData['mwimagemap'])) {
